@@ -1,6 +1,6 @@
 {% extends 'adminbase.html.twig' %}
 
-{% block title %}Edit Category{% endblock %}
+{% block title %}Restaurant{% endblock %}
 
 {% block body %}
 <div class="dashboard-wrapper">
@@ -31,13 +31,58 @@
         <div class="row">
             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                 <h3 class="text-center">
-    <h1>Edit Category</h1>
+    <h1>Restaurant</h1>
 
-    {{ include('admin/category/_form.html.twig', {'button_label': 'Update'}) }}
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ restaurant.id }}</td>
+            </tr>
+            <tr>
+                <th>Title</th>
+                <td>{{ restaurant.title }}</td>
+            </tr>
+            <tr>
+                <th>Keywords</th>
+                <td>{{ restaurant.keywords }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ restaurant.description }}</td>
+            </tr>
+            <tr>
+                <th>Image</th>
+                <td><img src="{{ asset('uploads/images'  ~ restaurant.image) }}" height="100"></td>
+            </tr>
+            <tr>
+                <th>Score</th>
+                <td>{{ restaurant.score }}</td>
+            </tr>
+            <tr>
+                <th>Location</th>
+                <td>{{ restaurant.location }}</td>
+            </tr>
+            <tr>
+                <th>Status</th>
+                <td>{{ restaurant.status }}</td>
+            </tr>
+            <tr>
+                <th>Created_at</th>
+                <td>{{ restaurant.createdAt ? restaurant.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Updated_at</th>
+                <td>{{ restaurant.updatedAt ? restaurant.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
 
-    <a href="{{ path('admin_category_index') }}">back to list</a>
+    <a href="{{ path('admin_restaurant_index') }}">back to list</a>
 
-    {{ include('admin/category/_delete_form.html.twig') }}
+    <a href="{{ path('admin_restaurant_edit', {'id': restaurant.id}) }}">edit</a>
+
+    {{ include('admin/restaurant/_delete_form.html.twig') }}
                 </h3>
             </div>
         </div>
