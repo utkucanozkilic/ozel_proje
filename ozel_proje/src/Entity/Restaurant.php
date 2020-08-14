@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\RestaurantRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 
@@ -16,6 +18,16 @@ class Product
      */
     private $imageFilename;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Image::class, mappedBy="restaurant")
+     */
+    private $images;
+
+    public function __construct()
+    {
+        $this->images = new ArrayCollection();
+    }
+
     public function getImageFilename()
     {
         return $this->imageFilename;
@@ -24,6 +36,37 @@ class Product
     public function setImageFilename($imageFilename)
     {
         $this->imageFilename = $imageFilename;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Image[]
+     */
+    public function getImages(): Collection
+    {
+        return $this->images;
+    }
+
+    public function addImage(Image $image): self
+    {
+        if (!$this->images->contains($image)) {
+            $this->images[] = $image;
+            $image->setRestaurant($this);
+        }
+
+        return $this;
+    }
+
+    public function removeImage(Image $image): self
+    {
+        if ($this->images->contains($image)) {
+            $this->images->removeElement($image);
+            // set the owning side to null (unless already changed)
+            if ($image->getRestaurant() === $this) {
+                $image->setRestaurant(null);
+            }
+        }
 
         return $this;
     }
